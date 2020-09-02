@@ -1,4 +1,4 @@
-# Getting Windows Subsystem for Linux running smoothly on Windows 10
+# An introduction to Linux through Windows Subsystem for Linux
 
 [GitHub Pages link](https://theshepord.github.io/intro-to-WSL/)
 
@@ -6,7 +6,7 @@
 
 *tl;dr skip to next section*
 
-If you're an unfortunate soul using Windows 10 in Yale's CPSC 201, this guide is for you. You're probably all scrambling trying to get Linux to work on your machines right now. Choice paralysis is a big part of this, there's so many options to choose from. In this section I'll give a very basic intro to some of them, and explain why I chose Windows Subsystem for Linux among them. All of these have plenty of documentation online so Google if in doubt.
+So you're thinking of installing a Linux distribution, and are unsure where to start. Or you're an unfortunate soul using Windows 10 in CPSC 201. Either way, this guide is for you. In this section I'll give a very basic intro to some of options you've got at your disposal, and explain why I chose Windows Subsystem for Linux among them. All of these have plenty of documentation online so Google if in doubt.
 
 * **Dual-booting with Windows and a Linux distro**
   * Will basically involve partitioning your drive and installing Linux from an external bootable USB through your computer's boot menu. You'll get the full Linux experience.
