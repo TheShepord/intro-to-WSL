@@ -45,10 +45,10 @@ If you get a large text output, WSL has been successfully enabled on your machin
 
 Great! Now that you've got WSL installed, let's download a Linux distro. Press the Winkey and type in `Microsoft Store`. Now use the store's search icon and type in `Ubuntu`. Ubuntu is a Debian-based Linux distribution, and seems to have the best integration with WSL, so that's what we'll be going for. If you want to be quirky, [here are some other options](https://docs.microsoft.com/en-us/windows/wsl/install-win10#install-your-linux-distribution-of-choice). Once you type in Ubuntu three options should pop up: Ubuntu, Ubuntu 20.04 LTS, and Ubuntu 18.04 LTS.
 
-![Windows Store](https://github.com/TheShepord/intro-to-WSL/blob/master/docs/images/winstore.png)
+![Windows Store](https://theshepord.github.io/intro-to-WSL/docs/images/winstore.png)
 Installing plain-old "Ubuntu" will mean the app updates whenever a new major Ubuntu distribution is released. The current version (as of 09/02/2020) is Ubuntu 20.04.1 LTS. The other two are older distributions of Ubuntu. For most use-cases, i.e. unless you're running some software that will break when upgrading, you'll want to pick the regular Ubuntu option. That's what I did.
 
-Once that's done installing, again hit Winkey and open up Ubuntu. A console window should open up, asking you to wait a minute or two for files to de-compress and be stored on your PC. All future launches should take less than a second. It'll then prompt you to create a username and password. I'd recommend sticking to whatever your Windows username and password is so that you don't have to juggle around two different user/password combinations, but up to you. 
+Once that's done installing, again hit Winkey and open up Ubuntu. A console window should open up, asking you to wait a minute or two for files to de-compress and be stored on your PC. All future launches should take less than a second. It'll then prompt you to create a username and password. I'd recommend sticking to whatever your Windows username and password is so that you don't have to juggle around two different user/password combinations, but up to you.
 
 Finally, to upgrade all your packages, type in
 
@@ -76,7 +76,7 @@ For now, though, we'll focus on `/mnt`, which stands for mount. This is where yo
 Type in `sudo vim /etc/passwd`. You'll likely be prompted for your Ubuntu's password. `sudo` is a command that gives you root privileges in bash (akin to Windows's right-click then selecting 'Run as administrator'). `vim` is a command-line text-editing tool, kinda like an even crummier Notepad, which is a pain to use at first but bear with me and we can pull through. `/etc/passwd` is a plaintext file that does not store passwords, as the name would suggest, but rather stores essential user info used every time you open up WSL. 
 
 Anyway, once you've typed that in, your shell should look something like this:
-![vim /etc/passwd](https://github.com/TheShepord/intro-to-WSL/blob/master/docs/images/vim-etc-passwd.png)
+![vim /etc/passwd](https://theshepord.github.io/intro-to-WSL/docs/images/vim-etc-passwd.png)
 
 Using arrow-keys, find the entry that begins with your Ubuntu username. It should be towards the bottom of the file. In my case, the line looks like
 
