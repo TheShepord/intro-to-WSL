@@ -33,11 +33,11 @@ So if you've read this far I've convinced you to use WSL. Let's get started with
 
 Press the Windows key (henceforth Winkey) and type in `PowerShell`. Right-click the icon and select `run as administrator`. Next, paste in this command:
 
-    `dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart`
+    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 
 Now you'll want to perform a hard shutdown on your computer. This can become unecessarily complicated because of Window's fast startup feature, but here we go. First try pressing the Winkey, clicking on the power icon, and selecting `Shut Down` while holding down the shift key. Let go of the shift key and the mouse, and let it shutdown. Great! Now open up `Command Prompt` and type in 
 
-    `wsl --help`
+    wsl --help
 
 If you get a large text output, WSL has been successfully enabled on your machine. If nothing happens, your computer failed at performing a hard shutdown, in which case you can try the age-old technique of just holding down your computer's power button until the computer turns itself off. Make sure you don't have any unsaved documents open when you do this. 
 
@@ -45,18 +45,18 @@ If you get a large text output, WSL has been successfully enabled on your machin
 
 Great! Now that you've got WSL installed, let's download a Linux distro. Press the Winkey and type in `Microsoft Store`. Now use the store's search icon and type in `Ubuntu`. Ubuntu is a Debian-based Linux distribution, and seems to have the best integration with WSL, so that's what we'll be going for. If you want to be quirky, [here are some other options](https://docs.microsoft.com/en-us/windows/wsl/install-win10#install-your-linux-distribution-of-choice). Once you type in Ubuntu three options should pop up: Ubuntu, Ubuntu 20.04 LTS, and Ubuntu 18.04 LTS.
 
-![Windows Store](https://github.com/TheShepord/intro-to-WSL/blob/master/docs/images/vim-etc-passwd.png)
+![Windows Store](https://github.com/TheShepord/intro-to-WSL/blob/master/docs/images/winstore.png)
 Installing plain-old "Ubuntu" will mean the app updates whenever a new major Ubuntu distribution is released. The current version (as of 09/02/2020) is Ubuntu 20.04.1 LTS. The other two are older distributions of Ubuntu. For most use-cases, i.e. unless you're running some software that will break when upgrading, you'll want to pick the regular Ubuntu option. That's what I did.
 
 Once that's done installing, again hit Winkey and open up Ubuntu. A console window should open up, asking you to wait a minute or two for files to de-compress and be stored on your PC. All future launches should take less than a second. It'll then prompt you to create a username and password. I'd recommend sticking to whatever your Windows username and password is so that you don't have to juggle around two different user/password combinations, but up to you. 
 
 Finally, to upgrade all your packages, type in
 
-    `sudo apt-get update`
+    sudo apt-get update
 
 And then 
 
-    `sudo apt-get upgrade`
+    sudo apt-get upgrade
 
 `apt-get` is the Ubuntu package manager, this is what you'll be using to install additional programs on WSL.
 
@@ -80,15 +80,15 @@ Anyway, once you've typed that in, your shell should look something like this:
 
 Using arrow-keys, find the entry that begins with your Ubuntu username. It should be towards the bottom of the file. In my case, the line looks like
 
-    `theshep:x:1000:1000:,,,:/home/pizzatron3000:/bin/bash`
+    theshep:x:1000:1000:,,,:/home/pizzatron3000:/bin/bash
 
 See that cringy, crummy `/home/pizzatron3000`? Not only do I regret that username to this day, it's also not where we want our home directory. Let's change that! Press `i` to initiate vim's -- INSERT -- mode. Use arrow-keys to navigate to that section, and delete `/home/<your_username>` by holding down backspace. Remember that filepath I asked you to remember? `/mnt/c/Users/<your_Windows_home_folder>`. Type that in. For me, the line now looks like
 
-    `theshep:x:1000:1000:,,,:/mnt/c/Users/lucas:/bin/bash`
+    theshep:x:1000:1000:,,,:/mnt/c/Users/lucas:/bin/bash
 
 Next, press `esc` to exit insert mode, then type in the following:
 
-    `:wq`
+    :wq
 
 The `:` tells vim you're inputting a command, `w` means write, and `q` means quit. If you've screwed up any of the above sections, you can also type in `:q!` to exit vim without saving the file. Just remember to exit insert mode by pressing `esc` before inputting commands, else you'll instead be writing to the file.
 
@@ -99,7 +99,7 @@ Great! If you now open up a new terminal and type in `pwd`, you should be in you
 
 Your home folder contains all your Ubuntu and bash configuration files. However, since we just changed the home folder to your Window's home folder, we've lost these configuration files. Let's bring them back! These configuration files are hidden inside `/home/<your_Ubuntu_username>`, and they all start with a `.` in front of the filename. So let's copy them over into your new home directory! Type in the following:
 
-    `cp -r /home/<your_Ubuntu_username>/* ~`
+    cp -r /home/<your_Ubuntu_username>/* ~
 
 `cp` stands for CoPy, -r stands for recursive (i.e. descend into directories), the `*` is a Kleene Star and means "grab everything that's here", and the `~` is a quick way of writing your home directory's filepath (which would be `/mnt/c/Users/<your_Windows_username>`) without having to type all that in again. Once you've run this, all your configuration files should now be present in your new home directory. Configuration files like `.bashrc`, `.profile`, and `.bash_profile` essentially provides commands that are run whenever you open a new shell. So now, if you open a new shell, everything should be working normally. Amazing. We're done!
 
