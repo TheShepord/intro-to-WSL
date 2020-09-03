@@ -12,15 +12,16 @@ So you're thinking of installing a Linux distribution, and are unsure where to s
 * **Using a virtual machine (VM) to run Linux**
   * Involves downloading a VM, downloading a .iso image file of whatever operating system you'd like, and running on your local machine.
   * Devours RAM and is generally pretty slow, would not recommend.
-* **Using bash emulation software**
-  * bash stands for Bourne Again Shell (no, Bourne is not a typo), it's the most commonly used Linux shell these days
-  * bash emulators generally don't include a package manager, i.e. you can't download new bash programs, so pretty limited for general usage. BUT you can install a package manager externally, kind of hacky but can work.
-  * examples of bash emulators include PuTTY, Git Bash, msys2 and mingw.
+* **Using terminal emulators**
+  * These provide commands and functionality similar to a Linux terminal, but are still running on Windows architecture.
+  * These days, the most commonly-used Linux terminal is called bash. bash stands for Bourne Again Shell (no, Bourne is not a typo), and is likely what you'll be using as well.
+  * Terminal emulators generally don't include a package manager, i.e. you can't download new bash programs, so pretty limited for general usage. BUT you can install a package manager externally, kind of hacky but can work.
+  * Examples of terminal emulators include PuTTY, Git Bash, msys2 and mingw.
 * **Using Windows Subsystem for Linux (either WSL 1 or WSL 2)**
-  * WSL provides a compatibility layer for running Linux natively on Windows 10. It has integration features certain Windows 10 development apps (notably Visual Studio Code) as well.
+  * WSL provides a compatibility layer for running GNU/Linux programs natively on Windows 10. It has integration features certain Windows 10 development apps (notably Visual Studio Code) as well.
   * You've got two options, WSL 1 and WSL 2. WSL 2 was recently released and features a real Linux kernel, as opposed to an simulated kernel in WSL. This means WSL 2 offers significant performance advantages, but still lacks some of WSL 1's features.
   * WSL 1 is what I currently use, and thus what I'll be talking about in this guide. I'm not necessarily recommending it, frankly I regret not doing a dual-boot sooner and ditching Windows, but a dual-boot isn't for everyone and takes a lot of time you might not have right now.
-  * Getting WSL initially setup is easy, but making it run smoothly requires some effort, and some features (like audio playback or displaying GUIs) require workarounds you can research if interested.
+  * Getting WSL initially setup is easy, but making it run smoothly requires some effort, and some features (like audio playback or displaying GUIs) require workarounds you can research if interested. WSL will also not work properly with low-level system tools.
 
   With that out of the way, let's get started with setting up WSL 1 on your Windows 10 machine.
 
@@ -65,7 +66,7 @@ And then
 
 *tl;dr skip to the next section*
 
-The two above steps are technically all you need for running WSL on your system. However, you may notice that whenever you open up the Ubuntu app your current folder seems to be completely random. If you type in `pwd` (for Present Working Directory, 'directory' is synonymous with 'folder') inside Ubuntu and hit enter, you'll likely get some output akin to `/home/<your_username>`. Where is this folder? Is it my home folder? Type in `ls` (for LiSt) to see what files are in this folder. Probably you won't get any output, because surprise surprise this folder is not your Windows home folder and is in fact empty (okay it's actually not empty, which we'll see in a bit. If you type in `ls -a`, a for All, you'll see other files but notice they have a period in front of them, which tells bash that they should be hidden by default. Anyways).
+The two above steps are technically all you need for running WSL on your system. However, you may notice that whenever you open up the Ubuntu app your current folder seems to be completely random. If you type in `pwd` (for Print Working Directory, 'directory' is synonymous with 'folder') inside Ubuntu and hit enter, you'll likely get some output akin to `/home/<your_username>`. Where is this folder? Is it my home folder? Type in `ls` (for LiSt) to see what files are in this folder. Probably you won't get any output, because surprise surprise this folder is not your Windows home folder and is in fact empty (okay it's actually not empty, which we'll see in a bit. If you type in `ls -a`, a for All, you'll see other files but notice they have a period in front of them. This is a convention for specifying files that should be hidden by default, and `ls`, as well as most other commands, will honor this convention. Anyways).
 
 So where is my Windows home folder? Is WSL completely separate from Windows? Nope! This is Windows Subsystem for Linux after all. Notice how, when you typed `pwd` earlier, the address you got was `/home/<your_username>`. Notice that forward-slash right before `home`. That forward-slash indicates the root directory (not to be confused with the `/root` directory), which is the directory at the top of the directory hierarchy and contains all other directories in your system. So if we type `ls /`, you'll see what are the top-most directories in your system. Okay, great. They have a bunch of seemingly random names. Except, shocker, they aren't random. I've provided a quick run-down in Appendix A.
 
@@ -74,7 +75,7 @@ For now, though, we'll focus on `/mnt`, which stands for mount. This is where yo
 
 ### 4. Changing your default home folder
 
-Type in `sudo vim /etc/passwd`. You'll likely be prompted for your Ubuntu's password. `sudo` is a command that gives you root privileges in bash (akin to Windows's right-click then selecting 'Run as administrator'). `vim` is a command-line text-editing tool, kinda like an even crummier Notepad, which is a pain to use at first but bear with me and we can pull through. `/etc/passwd` is a plaintext file that historically was used to store passwords back when encryption wasn't a big deal, but now instead stores essential user info used every time you open up WSL.
+Type in `sudo vim /etc/passwd`. You'll likely be prompted for your Ubuntu's password. `sudo` is a command that gives you root privileges in bash (akin to Windows's right-click then selecting 'Run as administrator'). `vim` is a command-line text-editing tool, which out-of-the-box functions kind of like a crummy Notepad (you can customize it infinitely though, and some people have insane vim setups. Appendix B has more info). `/etc/passwd` is a plaintext file that historically was used to store passwords back when encryption wasn't a big deal, but now instead stores essential user info used every time you open up WSL.
 
 Anyway, once you've typed that in, your shell should look something like this:
 ![vim /etc/passwd](https://theshepord.github.io/intro-to-WSL/docs/images/vim-etc-passwd.png)
@@ -115,24 +116,26 @@ Here are two handy commands you can add to your `.profile` file. Run `vim ~/.pro
 
 ## Appendix A: brief intro to top-level UNIX directories
 
-tl;dr only mess with `/mnt`, `/home`, and maybe maybe `/usr`. Don't touch anything else.
+*tl;dr only mess with `/mnt`, `/home`, and maybe maybe `/usr`. Don't touch anything else.*
 
 * `bin`: binaries, contains Ubuntu binary (aka executable) files that are used in bash. Here you'll find the binaries that execute commands like `ls` and `pwd`. Similar to /usr/bin, but `bin` gets loaded earlier in the booting process so it contains the most important commands.
 * `boot`: contains information for operating system booting. Empty in WSL, because WSL isn't an operating system.
-* `dev`: devices, contains information for Ubuntu to communicate with I/O devices. One useful file here is `/dev/null`, which is basically an information black hole that automatically deletes any data you pass it.
+* `dev`: devices, provides files that allow Ubuntu to communicate with I/O devices. One useful file here is `/dev/null`, which is basically an information black hole that automatically deletes any data you pass it.
 * `etc`: no idea why it's called etc, but it contains system-wide configuration files
 * `home`: equivalent to Window's C:/Users folder, contains home folders for the different users. In an Ubuntu system, under `/home/<username>` you'd find the Documents folder, Downloads folder, etc.
 * `lib`: libraries used by the system
 * `lib64` 64-bit libraries used by the system
 * `mnt`: mount, where your drives are located
 * `opt`: third-party applications that (usually) don't have any dependencies outside the scope of their own package
-* `proc`: process information, contains details about your Linux system, kind of like Windows's C:/Windows folder
-* `run`: directory for programs to store runtime information. Similarly to `/bin` vs `/usr/bin`, `run` has the same function as `/var/run`, but gets loaded sooner in the boot process.
+* `proc`: process information, contains runtime information about your system (e.g. memory, mounted devices, hardware configurations, etc)
+* `run`: directory for programs to store runtime information.
 * `srv`: server folder, holds data to be served in protocols like ftp, www, cvs, and others
-* `sys`: system, used by the Linux kernel to set or obtain information about the host system
-* `tmp`: temporary, runtime files that are cleared out after every reboot. Kinda like RAM in that way.
-* `usr`: contains additional UNIX commands, header files for compiling C programs, among other things. Most of everything you install using `apt-get` ends up here.
+* `sys`: system, provides information about different I/O devices to the Linux Kernel. If `dev` files allows you to access I/O devices, `sys` files tells you information about these devices.
+* `tmp`: temporary, these are system runtime files that are (in most Linux distros) cleared out after every reboot. It's also sort of deprecated for security reasons, and programs will generally prefer to use `run`.
+* `usr`: contains additional UNIX commands, header files for compiling C programs, among other things. Kind of like `bin` but for less important programs. Most of everything you install using `apt-get` ends up here.
 * `var`: variable, contains variable data such as logs, databases, e-mail etc, but that persist across different boots.
+
+Also keep in mind that all of this is just convention. No Linux distribution needs to follow this file structure, and in fact almost all will deviate from what I just described. Hell, you could make your own Linux fork where `/mnt/c` information is stored in `tmp`.
 
 ## Appendix B: random resources
 
@@ -143,3 +146,4 @@ tl;dr only mess with `/mnt`, `/home`, and maybe maybe `/usr`. Don't touch anythi
 * [Setting up audio on WSL](https://research.wmz.ninja/articles/2017/11/setting-up-wsl-with-graphics-and-audio.html)
 * [Installing WSL 2](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
 * [Windows 10 / Ubuntu Dual-boot](https://itsfoss.com/install-ubuntu-1404-dual-boot-mode-windows-8-81-uefi/)
+* [Spicing up vim](https://www.makeuseof.com/tag/5-things-need-put-vim-config-file/)
