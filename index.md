@@ -7,14 +7,15 @@ So you're thinking of installing a Linux distribution, and are unsure where to s
 * **Dual-booting with Windows and a Linux distro**
   * Will basically involve partitioning your drive and installing Linux from an external bootable USB through your computer's boot menu. You'll get the full Linux experience.
   * Lots of Linux flavors to choose from. For beginners, Ubuntu and Linux Mint are generally recommended. I have Ubuntu 18.04 LTS, I'd recommend Ubuntu 20.04 LTS since it's newer, but it's all up to you.
-  * However, it's a pain to setup and to constantly be switching between operating systems, so up to you. Maybe you wanna make the full jump to Linux, maybe you don't.
-  * Life pro tip: if you go this route, disable Window 10's Fast Startup feature as it will get very screwy with a dual-boot.
+  * However, it can be a pain to constantly be switching between operating systems. Maybe you wanna make the full jump to Linux, maybe you don't.
+  * Life pro tip: if you go down this route, disable Window 10's Fast Startup feature as it will get very screwy with a dual-boot. I've also included a helpful guide in Appendix B.
 * **Using a virtual machine (VM) to run Linux**
   * Involves downloading a VM, downloading a .iso image file of whatever operating system you'd like, and running on your local machine.
   * Devours RAM and is generally pretty slow, would not recommend.
-* **Using bash emulation software, like Putty or Git Bash**
+* **Using bash emulation software**
   * bash stands for Bourne Again Shell (no, Bourne is not a typo), it's the most commonly used Linux shell these days
   * bash emulators generally don't include a package manager, i.e. you can't download new bash programs, so pretty limited for general usage. BUT you can install a package manager externally, kind of hacky but can work.
+  * examples of bash emulators include PuTTY, Git Bash, msys2 and mingw.
 * **Using Windows Subsystem for Linux (either WSL 1 or WSL 2)**
   * WSL provides a compatibility layer for running Linux natively on Windows 10. It has integration features certain Windows 10 development apps (notably Visual Studio Code) as well.
   * You've got two options, WSL 1 and WSL 2. WSL 2 was recently released and features a real Linux kernel, as opposed to an simulated kernel in WSL. This means WSL 2 offers significant performance advantages, but still lacks some of WSL 1's features.
@@ -66,14 +67,14 @@ And then
 
 The two above steps are technically all you need for running WSL on your system. However, you may notice that whenever you open up the Ubuntu app your current folder seems to be completely random. If you type in `pwd` (for Present Working Directory, 'directory' is synonymous with 'folder') inside Ubuntu and hit enter, you'll likely get some output akin to `/home/<your_username>`. Where is this folder? Is it my home folder? Type in `ls` (for LiSt) to see what files are in this folder. Probably you won't get any output, because surprise surprise this folder is not your Windows home folder and is in fact empty (okay it's actually not empty, which we'll see in a bit. If you type in `ls -a`, a for All, you'll see other files but notice they have a period in front of them, which tells bash that they should be hidden by default. Anyways).
 
-So where is my Windows home folder? Is WSL completely separate from Windows? Nope! This is Windows Subsystem for Linux after all. Notice how, when you typed `pwd` earlier, the address you got was `/home/<your_username>`. Notice that forward-slash right before `home`. That forward-slash indicates the root directory (not to be confused with the `/root` directory), which is the directory at the top of the directory hierarchy and contains all other directories in your system. So if we type `ls /`, you'll see what are the top-most directories in your system. Okay, great. They have a bunch of seemingly random names. Except, shocker, they aren't random. I've provided a quick run-down in Appendix A. 
+So where is my Windows home folder? Is WSL completely separate from Windows? Nope! This is Windows Subsystem for Linux after all. Notice how, when you typed `pwd` earlier, the address you got was `/home/<your_username>`. Notice that forward-slash right before `home`. That forward-slash indicates the root directory (not to be confused with the `/root` directory), which is the directory at the top of the directory hierarchy and contains all other directories in your system. So if we type `ls /`, you'll see what are the top-most directories in your system. Okay, great. They have a bunch of seemingly random names. Except, shocker, they aren't random. I've provided a quick run-down in Appendix A.
 
 For now, though, we'll focus on `/mnt`, which stands for mount. This is where your C drive, which contains all your Windows stuff, is mounted. So if you type `ls /mnt/c`, you'll begin to notice some familiar folders. Type in `ls /mnt/c/Users`, and voilà, there's your Windows home folder. Remember this filepath, `/mnt/c/Users/<your_Windows_home_folder>`. When we open up Ubuntu, we don't want it tossing us in this random `/home/<your_username>` directory, we want our Windows home folder. Let's change that!
 
 
 ### 4. Changing your default home folder
 
-Type in `sudo vim /etc/passwd`. You'll likely be prompted for your Ubuntu's password. `sudo` is a command that gives you root privileges in bash (akin to Windows's right-click then selecting 'Run as administrator'). `vim` is a command-line text-editing tool, kinda like an even crummier Notepad, which is a pain to use at first but bear with me and we can pull through. `/etc/passwd` is a plaintext file that does not store passwords, as the name would suggest, but rather stores essential user info used every time you open up WSL. 
+Type in `sudo vim /etc/passwd`. You'll likely be prompted for your Ubuntu's password. `sudo` is a command that gives you root privileges in bash (akin to Windows's right-click then selecting 'Run as administrator'). `vim` is a command-line text-editing tool, kinda like an even crummier Notepad, which is a pain to use at first but bear with me and we can pull through. `/etc/passwd` is a plaintext file that historically was used to store passwords back when encryption wasn't a big deal, but now instead stores essential user info used every time you open up WSL.
 
 Anyway, once you've typed that in, your shell should look something like this:
 ![vim /etc/passwd](https://theshepord.github.io/intro-to-WSL/docs/images/vim-etc-passwd.png)
@@ -99,20 +100,20 @@ Great! If you now open up a new terminal and type in `pwd`, you should be in you
 
 Your home folder contains all your Ubuntu and bash configuration files. However, since we just changed the home folder to your Window's home folder, we've lost these configuration files. Let's bring them back! These configuration files are hidden inside `/home/<your_Ubuntu_username>`, and they all start with a `.` in front of the filename. So let's copy them over into your new home directory! Type in the following:
 
-    cp -r /home/<your_Ubuntu_username>/* ~
+    cp -r /home/<your_Ubuntu_username>/. ~
 
-`cp` stands for CoPy, -r stands for recursive (i.e. descend into directories), the `*` is a Kleene Star and means "grab everything that's here", and the `~` is a quick way of writing your home directory's filepath (which would be `/mnt/c/Users/<your_Windows_username>`) without having to type all that in again. Once you've run this, all your configuration files should now be present in your new home directory. Configuration files like `.bashrc`, `.profile`, and `.bash_profile` essentially provides commands that are run whenever you open a new shell. So now, if you open a new shell, everything should be working normally. Amazing. We're done!
+`cp` stands for CoPy, -r stands for recursive (i.e. descend into directories), the `.` at the end is cp-specific syntax that lets it copy anything, including hidden files, and the `~` is a quick way of writing your home directory's filepath (which would be `/mnt/c/Users/<your_Windows_username>`) without having to type all that in again. Once you've run this, all your configuration files should now be present in your new home directory. Configuration files like `.bashrc`, `.profile`, and `.bash_profile` essentially provide commands that are run whenever you open a new shell. So now, if you open a new shell, everything should be working normally. Amazing. We're done!
 
 ### 6. Tips & tricks
 
-Here are two handy commands you can add to your `.profile` file. Run `vim ~/.profile`, then, type these in at the top of the `.profile` file, one per line, using the commands we discussed previously (`i` to enter insert mode, `esc` to exit insert mode, `:wq` to save and quit). 
+Here are two handy commands you can add to your `.profile` file. Run `vim ~/.profile`, then, type these in at the top of the `.profile` file, one per line, using the commands we discussed previously (`i` to enter insert mode, `esc` to exit insert mode, `:wq` to save and quit).
 
-`alias rm='rm -i'` makes it so that the `rm` command will always ask for confirmation when you're deleting a file. `rm`, for ReMove, is like a Windows delete except literally permanent and you will lose that data for good, so it's nice to have this extra safeguard. You can type `rm -f` to bypass. Linux can be super powerful, but with great power comes great responsibility. NEVER NEVER NEVER type in `rm -rf /`, this is saying 'delete literally everything and don't ask for confirmation', your computer will die. You've been warned. Be careful.
+`alias rm='rm -i'` makes it so that the `rm` command will always ask for confirmation when you're deleting a file. `rm`, for ReMove, is like a Windows delete except literally permanent and you will lose that data for good, so it's nice to have this extra safeguard. You can type `rm -f` to bypass. Linux can be super powerful, but with great power comes great responsibility. NEVER NEVER NEVER type in `rm -rf /`, this is saying 'delete literally everything and don't ask for confirmation', your computer will die. Newer versions of `rm` fail when you type this in, but don't push your luck. You've been warned. Be careful.
 
 `export DISPLAY=:0` if you [install XLaunch VcXsrv](https://sourceforge.net/projects/vcxsrv/), this line allows you to open graphical interfaces through Ubuntu. The `export` sets the environment variable `DISPLAY`, and the `:0` tells Ubuntu that it should use the localhost display.
 
 
-## Appendix A: overview of top-level UNIX directories
+## Appendix A: brief intro to top-level UNIX directories
 
 tl;dr only mess with `/mnt`, `/home`, and maybe maybe `/usr`. Don't touch anything else.
 
@@ -124,7 +125,7 @@ tl;dr only mess with `/mnt`, `/home`, and maybe maybe `/usr`. Don't touch anythi
 * `lib`: libraries used by the system
 * `lib64` 64-bit libraries used by the system
 * `mnt`: mount, where your drives are located
-* `opt`: third-party applications that don't have any dependencies outside the scope of their own package
+* `opt`: third-party applications that (usually) don't have any dependencies outside the scope of their own package
 * `proc`: process information, contains details about your Linux system, kind of like Windows's C:/Windows folder
 * `run`: directory for programs to store runtime information. Similarly to `/bin` vs `/usr/bin`, `run` has the same function as `/var/run`, but gets loaded sooner in the boot process.
 * `srv`: server folder, holds data to be served in protocols like ftp, www, cvs, and others
