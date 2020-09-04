@@ -153,7 +153,7 @@ Also keep in mind that all of this is just convention. No Linux distribution nee
 
 
 ## Additional contributors
-09/02 Wendy, pointed out error with paragraph 5 code
-09/02 /u/gordonmessmer, various corrections and suggestions
-09/02 /u/pobrn, various corrections and suggestions
-09/03 Tim, explained usage of `\\wsl$\` and `explorer.exe .`
+* 09/02 Wendy, pointed out error with paragraph 5 code
+* 09/02 /u/gordonmessmer, various corrections and suggestions
+* 09/02 /u/pobrn, various corrections and suggestions
+* 09/03 Tim, explained usage of `\\wsl$\` and `explorer.exe .`
