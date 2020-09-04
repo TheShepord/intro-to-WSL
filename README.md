@@ -6,7 +6,7 @@ I'm working as an Undergraduate Learning Assistant for CPSC 201 and wrote this g
 
 ## Introduction and motivation
 
-So you're thinking of installing a Linux distribution, and are unsure where to start. Or you're an unfortunate soul using Windows 10 in CPSC 201. Either way, this guide is for you. In this section I'll give a very basic intro to some of options you've got at your disposal, and explain why I chose Windows Subsystem for Linux among them. All of these have plenty of documentation online so Google if in doubt.
+So you're thinking of installing a Linux distribution, and are unsure where to start. Or you're an unfortunate soul using Windows 10 in CPSC 201. Either way, this guide is for you. In this section I'll give a very basic intro to some of options you've got at your disposal, and explain why I chose Windows Subsystem for Linux among them. All of these have plenty of documentation online so Google if in doubt. I've also included some additional links in Appendix B.
 
 * **Dual-booting with Windows and a Linux distro**
   * Will basically involve partitioning your drive and installing Linux from an external bootable USB through your computer's boot menu. You'll get the full Linux experience.
