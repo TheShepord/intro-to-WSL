@@ -15,20 +15,17 @@ So you're thinking of installing a Linux distribution, and are unsure where to s
   * Life pro tip: if you go down this route, disable Window 10's Fast Startup feature as it will get very screwy with a dual-boot. I've also included a helpful guide in Appendix B.
 * **Using a virtual machine (VM) to run Linux**
   * Involves downloading a VM, downloading a .iso image file of whatever operating system you'd like, and running on your local machine.
-  * Devours RAM and is generally pretty slow, would not recommend.
+  * Devours RAM and is generally slower than other options presented here, would not recommend.
 * **Using terminal emulators**
   * These provide commands and functionality similar to a Linux terminal, but are still running on Windows architecture.
   * These days, the most commonly-used Linux terminal is called bash. bash stands for Bourne Again Shell (no, Bourne is not a typo), and is likely what you'll be using as well.
   * Terminal emulators generally don't include a package manager, i.e. you can't download new bash programs, so pretty limited for general usage. BUT you can install a package manager externally, kind of hacky but can work.
   * Examples of terminal emulators include PuTTY, Git Bash, msys2 and mingw.
-* **Using Windows Subsystem for Linux (either WSL 1 or WSL 2)**
-  * WSL provides a compatibility layer for running GNU/Linux programs natively on Windows 10. It has integration features certain Windows 10 development apps (notably Visual Studio Code) as well.
-  * You've got two options, WSL 1 and WSL 2. WSL 2 was recently released and features a real Linux kernel, as opposed to an simulated kernel in WSL. This means WSL 2 offers significant performance advantages, but still lacks some of WSL 1's features.
-  * WSL 1 is what I currently use, and thus what I'll be talking about in this guide. I'm not necessarily recommending it, frankly I regret not doing a dual-boot sooner and ditching Windows, but a dual-boot isn't for everyone and takes a lot of time you might not have right now.
-  * Getting WSL initially setup is easy, but making it run smoothly requires some effort, and some features (like audio playback or displaying GUIs) require workarounds you can research if interested. WSL will also not work properly with low-level system tools.
-
-  With that out of the way, let's get started with setting up WSL 1 on your Windows 10 machine.
-
+* **Using Windows Subsystem for Linux (either WSL or WSL 2)**
+  * WSL and WSL 2 provide a compatibility layer for running GNU/Linux programs natively on Windows 10. They have integration features with certain Windows 10 development apps (notably Visual Studio Code) as well.
+  * You've got two options, WSL and WSL 2. WSL 2 was recently released and features a real Linux kernel, as opposed to a simulated kernel in WSL. This means WSL 2 offers significant performance advantages, but still lacks some of WSL's features.
+  * WSL is what I currently use, and thus what I'll be talking about in this guide. I'm not necessarily recommending it, frankly I regret not doing a dual-boot sooner and ditching Windows, but a dual-boot isn't for everyone and takes a lot of time you might not have right now.
+  * Getting WSL initially setup is easy, but making it run smoothly requires some effort, and some features (like audio playback or displaying GUIs) require workarounds. I've provided some references in Appendix B. WSL will also not work properly with low-level system tools.
 
 ## Setting up WSL
 
@@ -41,11 +38,11 @@ Press the Windows key (henceforth Winkey) and type in `PowerShell`. Right-click 
 
     dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 
-Now you'll want to perform a hard shutdown on your computer. This can become unecessarily complicated because of Window's fast startup feature, but here we go. First try pressing the Winkey, clicking on the power icon, and selecting `Shut Down` while holding down the shift key. Let go of the shift key and the mouse, and let it shutdown. Great! Now open up `Command Prompt` and type in 
+Now you'll want to perform a hard shutdown on your computer. This can become unecessarily complicated because of Window's fast startup feature, but here we go. First try pressing the Winkey, clicking on the power icon, and selecting `Shut Down` while holding down the shift key. Let go of the shift key and the mouse, and let it shutdown. Great! Now open up `Command Prompt` and type in
 
     wsl --help
 
-If you get a large text output, WSL has been successfully enabled on your machine. If nothing happens, your computer failed at performing a hard shutdown, in which case you can try the age-old technique of just holding down your computer's power button until the computer turns itself off. Make sure you don't have any unsaved documents open when you do this. 
+If you get a large text output, WSL has been successfully enabled on your machine. If nothing happens, your computer failed at performing a hard shutdown, in which case you can try the age-old technique of just holding down your computer's power button until the computer turns itself off. Make sure you don't have any unsaved documents open when you do this.
 
 ### 2. Installing Ubuntu
 
@@ -60,7 +57,7 @@ Finally, to upgrade all your packages, type in
 
     sudo apt-get update
 
-And then 
+And then
 
     sudo apt-get upgrade
 
