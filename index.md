@@ -47,7 +47,7 @@ If you get a large text output, WSL has been successfully enabled on your machin
 
 Great! Now that you've got WSL installed, let's download a Linux distro. Press the Winkey and type in `Microsoft Store`. Now use the store's search icon and type in `Ubuntu`. Ubuntu is a Debian-based Linux distribution, and seems to have the best integration with WSL, so that's what we'll be going for. If you want to be quirky, [here are some other options](https://docs.microsoft.com/en-us/windows/wsl/install-win10#install-your-linux-distribution-of-choice). Once you type in Ubuntu three options should pop up: Ubuntu, Ubuntu 20.04 LTS, and Ubuntu 18.04 LTS.
 
-![Windows Store](https://theshepord.github.io/intro-to-WSL/docs/images/winstore.png)
+![Windows Store image](https://theshepord.github.io/intro-to-WSL/docs/images/winstore.png)
 Installing plain-old "Ubuntu" will mean the app updates whenever a new major Ubuntu distribution is released. The current version (as of 09/02/2020) is Ubuntu 20.04.1 LTS. The other two are older distributions of Ubuntu. For most use-cases, i.e. unless you're running some software that will break when upgrading, you'll want to pick the regular Ubuntu option. That's what I did.
 
 Once that's done installing, again hit Winkey and open up Ubuntu. A console window should open up, asking you to wait a minute or two for files to de-compress and be stored on your PC. All future launches should take less than a second. It'll then prompt you to create a username and password. I'd recommend sticking to whatever your Windows username and password is so that you don't have to juggle around two different user/password combinations, but up to you.
@@ -75,10 +75,12 @@ For now, though, we'll focus on `/mnt`, which stands for mount. This is where yo
 
 ### 4. Changing your default home folder
 
+*Errata/Disclaimer: to be clear, this section and section 5 are completely optional. They're for your convenience. However, as has been brought to my attention, these steps can break certain authentication features. I haven't personally experienced this, and find it very unlikely you would either, but it is something to be aware of.*
+
 Type in `sudo vim /etc/passwd`. You'll likely be prompted for your Ubuntu's password. `sudo` is a command that gives you root privileges in bash (akin to Windows's right-click then selecting 'Run as administrator'). `vim` is a command-line text-editing tool, which out-of-the-box functions kind of like a crummy Notepad (you can customize it infinitely though, and some people have insane vim setups. Appendix B has more info). `/etc/passwd` is a plaintext file that historically was used to store passwords back when encryption wasn't a big deal, but now instead stores essential user info used every time you open up WSL.
 
 Anyway, once you've typed that in, your shell should look something like this:
-![vim /etc/passwd](https://theshepord.github.io/intro-to-WSL/docs/images/vim-etc-passwd.png)
+![image of what vim /etc/passwd looks like](https://theshepord.github.io/intro-to-WSL/docs/images/vim-etc-passwd.png)
 
 Using arrow-keys, find the entry that begins with your Ubuntu username. It should be towards the bottom of the file. In my case, the line looks like
 
@@ -114,6 +116,12 @@ Here are two handy commands you can add to your `.profile` file. Run `vim ~/.pro
 `export DISPLAY=:0` if you [install XLaunch VcXsrv](https://sourceforge.net/projects/vcxsrv/), this line allows you to open graphical interfaces through Ubuntu. The `export` sets the environment variable `DISPLAY`, and the `:0` tells Ubuntu that it should use the localhost display.
 
 
+Additionally, as has been pointed out to me after writing this guide, you can actually access and navigate WSL directories inside File Explorer! To do this, open up File Explorer and click on the little icon in the address bar.
+![Here's the icon!](https://theshepord.github.io/intro-to-WSL/docs/images/wsl-on-file-explorer.png)
+
+The path to your current folder should now be highlighted. Replace whatever's written with the following: `\\wsl$\`. Press enter, and you should see the Linux distribution you installed. In the case of this guide, it should be Ubuntu. Open up the folder, and voilà! You're looking at WSL inside File Explorer. You can also achieve the same result by opening up the Ubuntu terminal and typing in the command `explorer.exe .` to open up File Explorer in your present working directory.
+
+
 ## Appendix A: brief intro to top-level UNIX directories
 
 *tl;dr only mess with `/mnt`, `/home`, and maybe maybe `/usr`. Don't touch anything else.*
@@ -147,3 +155,10 @@ Also keep in mind that all of this is just convention. No Linux distribution nee
 * [Installing WSL 2](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
 * [Windows 10 / Ubuntu Dual-boot](https://itsfoss.com/install-ubuntu-1404-dual-boot-mode-windows-8-81-uefi/)
 * [Spicing up vim](https://www.makeuseof.com/tag/5-things-need-put-vim-config-file/)
+
+
+## Additional contributors
+09/02 Wendy, pointed out error with paragraph 5 code
+09/02 /u/gordonmessmer, various corrections and suggestions
+09/02 /u/pobrn, various corrections and suggestions
+09/03 Tim, explained usage of `\\wsl$\` and `explorer.exe .`
