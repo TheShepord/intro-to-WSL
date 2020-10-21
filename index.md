@@ -1,5 +1,8 @@
 # An introduction to Linux through Windows Subsystem for Linux
 
+I'm working as an Undergraduate Learning Assistant for CPSC 201 and wrote this guide to help out students who were in the same boat I was in when I first took Yale's Intro to Computer Science Course. It provides an overview of how to get started using Linux, guides you through setting up Windows Subsystem for Linux to run smoothly on Windows 10, and a very basic introduction to Linux.
+
+
 ## Table of Contents
 - [Introduction and motivation](#introduction-and-motivation)
 - [Setting up WSL](#setting-up-wsl)
