@@ -1,3 +1,19 @@
+# An introduction to Linux through Windows Subsystem for Linux
+
+## Table of Contents
+- [Introduction and motivation](#introduction-and-motivation)
+- [Setting up WSL](#setting-up-wsl)
+  - [1. Installing WSL](#1-installing-wsl)
+  - [2. Installing Ubuntu](#2-installing-ubuntu)
+  - [3. Intro to UNIX-based filesystems](#3-making-things-nice-and-crispy-an-introduction-to-unix-based-filesystems)
+  - [4. Changing your default home folder](#4-changing-your-default-home-folder)
+  - [5. Config files](#5-importing-your-configuration-files-into-the-new-home-directory)
+  - [6. Tips & tricks](#6-tips--tricks)
+- [Appendix A: brief intro to top-level UNIX directories](#appendix-a-brief-intro-to-top-level-unix-directories)
+- [Appendix B: random resources](#appendix-b-random-resources)
+- [Additional contributors](#additional-contributors)
+
+
 ## Introduction and motivation
 
 So you're thinking of installing a Linux distribution, and are unsure where to start. Or you're an unfortunate soul using Windows 10 in CPSC 201. Either way, this guide is for you. In this section I'll give a very basic intro to some of options you've got at your disposal, and explain why I chose Windows Subsystem for Linux among them. All of these have plenty of documentation online so Google if in doubt. I've also included some additional links in Appendix B.
